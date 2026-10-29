@@ -40,3 +40,7 @@ BLUEGREEN WEBSITE - KIVABE CHALABEN
    Phone, email, social link, menu, footer bodlale: shob .html file replace korte hobe.
 
 8) Team member-er chobi bodlate: images/team/ folder-e same nam-e (400x400 jpg) rakhun.
+
+9) Saf URL (.html chhara)
+   Online-e ঠিকানা hobe bgrcbd.com/about, /services, /team ... (GitHub Pages nijei .html chhara kholay).
+   Nijer computer-e double-click kore khulle bhetorer link kaj korbe na. Shudhu GitHub-e (online) dekhben.

@@ -1,6 +1,14 @@
 (function () {
   "use strict";
 
+  /* ---------- tidy address bar: /about.html -> /about, /index.html -> / ---------- */
+  try {
+    if (/^https?:$/.test(location.protocol) && /\.html$/.test(location.pathname) && !/\/404\.html$/.test(location.pathname)) {
+      var clean = location.pathname.replace(/index\.html$/, "").replace(/\.html$/, "");
+      history.replaceState(null, "", clean + location.search + location.hash);
+    }
+  } catch (e) {}
+
   /* ---------- mobile menu ---------- */
   var toggle = document.querySelector(".nav-toggle");
   var menu = document.getElementById("menu");
