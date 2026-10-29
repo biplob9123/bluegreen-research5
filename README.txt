@@ -29,3 +29,14 @@ BLUEGREEN WEBSITE - KIVABE CHALABEN
    training-civil-duet.jpg apnar asol group photo.
 
 6) Trade Licence: shudhu number ar issuer-er nam site-e ache. License-er chobi site-e nei.
+
+7) Kon bodlale kon file replace korben (GitHub-e shudhu bodlano file upload korlei hobe)
+   Home page lekha/chobi ........ index.html
+   Services ..................... services.html
+   Team (nam, pod, link, chobi) .. team.html  (+ chobi images/team/ folder-e)
+   Contact page ................. contact.html
+   Rong, button, font, animation . style.css
+   Menu, popup, form, animation .. script.js
+   Phone, email, social link, menu, footer bodlale: shob .html file replace korte hobe.
+
+8) Team member-er chobi bodlate: images/team/ folder-e same nam-e (400x400 jpg) rakhun.
