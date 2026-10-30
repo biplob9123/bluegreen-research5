@@ -51,3 +51,6 @@ UPGRADE v4: business email (info@, projects@, training@bgrcbd.com), 8 illustrate
 Projects and Insights as popup windows, Humayra's Google Scholar link, Mamun designation.
 NOTE: the contact form still delivers to the Gmail address registered with Web3Forms until you create a new
 key for info@bgrcbd.com at web3forms.com and paste it into build.py (web3forms_key) or send it to Claude.
+
+UPGRADE v5: fixed mobile menu (Services no longer stuck open, closed menu no longer blocks taps/scroll),
+mid-width dropdown, lighter animations on phones, bigger tap areas, Mamun's photo and details, 4-up team row.

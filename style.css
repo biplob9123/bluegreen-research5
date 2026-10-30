@@ -488,10 +488,13 @@ body.modal-open{overflow:hidden}
   .sub-toggle{width:44px;height:44px}
   .sub-toggle::after{left:17px;top:15px}
   .sub,.sub.wide,.sub.right{position:static;min-width:0;width:100%;flex-basis:100%;box-shadow:none;border:0;border-left:3px solid var(--leaf);border-radius:0;padding:4px 0 8px 10px;margin:0 0 8px;
-    display:none;opacity:1;visibility:visible;transform:none;grid-template-columns:1fr}
+    display:none;transform:none;grid-template-columns:1fr}
   .has-sub.open>.sub{display:grid}
   .has-sub:hover>.sub{display:none}
   .has-sub.open:hover>.sub{display:grid}
+  .menu{pointer-events:none}
+  .menu.open{pointer-events:auto}
+  .menu:not(.open) *{visibility:hidden!important;pointer-events:none!important}
   .menu li:last-child{padding-top:14px}
 }
 @media (max-width:860px){
@@ -565,10 +568,9 @@ body{animation:pagein .5s ease both}
 /* rich dropdown */
 .sub .mi{flex:none;width:34px;height:34px;border-radius:10px;display:grid;place-items:center;background:linear-gradient(135deg,var(--tint-cyan),var(--tint-leaf));color:var(--tide)}
 .sub .mi svg{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
-.sub a:has(.mi){display:flex;align-items:center;gap:12px}
+.sub a.rich{display:flex;align-items:center;gap:12px}
 .sub .mt{display:flex;flex-direction:column;line-height:1.25}
 .sub .mt small{color:var(--muted);font-size:.78rem;font-weight:400}
-.sub.wide{min-width:560px;display:grid;grid-template-columns:1fr 1fr}
 
 /* carousel */
 .gallery-sec{padding-top:0}
@@ -624,7 +626,7 @@ body{animation:pagein .5s ease both}
 .ribbon{position:absolute;left:12px;top:12px;padding:5px 12px;border-radius:99px;background:var(--leaf);color:#04281a;font:700 .75rem var(--sans)}
 .cbody{display:flex;flex-direction:column;gap:8px;padding:16px 18px 20px;flex:1}
 .cbody h3{font-size:1.1rem;margin:0}.cbody p{margin:0;color:var(--muted);font-size:.92rem}
-.cchip{align-self:flex-start;padding:3px 10px;border-radius:99px;font:700 .72rem var(--sans);letter-spacing:.04em;color:var(--c,var(--tide));background:color-mix(in srgb,var(--c,var(--tide)) 12%,#fff)}
+.cchip{align-self:flex-start;padding:3px 10px;border-radius:99px;font:700 .72rem var(--sans);letter-spacing:.04em;color:var(--c,var(--tide));background:#e8f1f2;background:color-mix(in srgb,var(--c,var(--tide)) 12%,#fff)}
 .cchip.light{background:rgba(255,255,255,.2);color:#fff}
 .cmeta{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:6px;font-size:.78rem;color:var(--muted)}
 .cmeta li{padding:2px 9px;border-radius:99px;background:var(--mist)}
@@ -643,8 +645,8 @@ body{animation:pagein .5s ease both}
 
 .member.flash{animation:flash 1.6s ease}
 @keyframes flash{30%{box-shadow:0 0 0 5px var(--leaf)}}
-@media(min-width:1300px){.team-grid{grid-template-columns:repeat(4,1fr)}}
-@media(max-width:1180px){.svc-grid3,.course-grid{grid-template-columns:repeat(3,1fr)}.sub.wide{min-width:0;display:block}}
+@media(min-width:1300px){.team-row .member:not(.lead){flex:0 0 calc(25% - 18px);max-width:none}}
+@media(max-width:1180px){.svc-grid3,.course-grid{grid-template-columns:repeat(3,1fr)}}
 @media(max-width:860px){.svc-grid3,.course-grid{grid-template-columns:repeat(2,1fr)}.srow,.srow:nth-child(even){grid-template-columns:1fr}.srow:nth-child(even) .sart{order:0}.steps.four{grid-template-columns:1fr 1fr}.carousel .stage{aspect-ratio:4/3}.sec-head{padding:20px}}
 @media(max-width:560px){.svc-grid3,.course-grid{grid-template-columns:1fr}.steps.four{grid-template-columns:1fr}.car-btn{width:40px;height:40px}.thumbs{display:none}}
 @media(prefers-reduced-motion:reduce){body{animation:none}.emblem .fl,.carousel .slide img{animation:none;transition:none}}
@@ -671,3 +673,20 @@ body{animation:pagein .5s ease both}
 @media(max-width:560px){.client-grid{grid-template-columns:1fr}}
 footer h2.ft{font-family:var(--sans);font-weight:700;letter-spacing:0}
 .sr-only{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+
+/* mid-width dropdown and small-screen performance / touch comfort */
+@media(max-width:1180px) and (min-width:1001px){.sub.wide{min-width:480px;left:-210px}}
+@media(max-width:1000px){
+.contours,.rip,.emblem .fl,.hero-deco i{animation:none!important}
+.hero-deco i{filter:none}
+.site-header{backdrop-filter:none}
+body{animation:none}
+.carousel .slide img,.carousel .slide.on img{transition:none;transform:none}
+}
+@media(max-width:760px){
+.topbar a{padding:8px 0}
+.topbar .socials a,.topbar-in>div:last-child a{min-width:36px;min-height:36px;justify-content:center}
+footer li a{display:inline-block;padding:9px 0}
+.foot-base a{display:inline-block;padding:9px 6px}
+.socials a{min-width:44px;min-height:44px}
+}
