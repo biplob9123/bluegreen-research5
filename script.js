@@ -49,7 +49,7 @@
   var openers = document.querySelectorAll("[data-open]");
   Array.prototype.forEach.call(openers, function (el) {
     el.addEventListener("click", function (e) {
-      if (e.target.closest && e.target.closest(".plinks a")) { return; }
+      if (e.target.closest && e.target.closest("a")) { return; }
       var d = document.getElementById(el.getAttribute("data-open"));
       if (d && d.showModal) { d.showModal(); document.body.classList.add("modal-open"); }
       e.stopPropagation();
@@ -64,7 +64,7 @@
 
   /* ---------- scroll reveal, process line, number count-up ---------- */
   var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  var targets = document.querySelectorAll(".sec-head, .svc-card, .four > div, .steps li, .strip, .linklist li, .mosaic figure, .member, .cta-in, .three > div, .row, .proj, .form-card, .info-card, .stats > div, .soft .split > *");
+  var targets = document.querySelectorAll(".sec-head, .svc-card, .four > div, .steps li, .strip, .linklist li, .mosaic figure, .ccard, .srow, .cl-card, .member, .cta-in, .three > div, .row, .proj, .form-card, .info-card, .stats > div, .soft .split > *");
   if ("IntersectionObserver" in window && !reduce) {
     var order = 0, lastParent = null;
     Array.prototype.forEach.call(targets, function (el) {
@@ -170,4 +170,67 @@
   /* ---------- footer year ---------- */
   var y = document.getElementById("year");
   if (y) { y.textContent = new Date().getFullYear(); }
+
+  /* ---------- gallery carousel ---------- */
+  Array.prototype.forEach.call(document.querySelectorAll("[data-carousel]"), function (c) {
+    var slides = c.querySelectorAll(".slide"), thumbs = c.querySelectorAll(".thumb"), cur = c.querySelector(".cur");
+    var i = 0, timer = null, playing = true, btn = c.querySelector(".car-play");
+    function go(n) {
+      i = (n + slides.length) % slides.length;
+      Array.prototype.forEach.call(slides, function (s, k) { s.classList.toggle("on", k === i); });
+      Array.prototype.forEach.call(thumbs, function (t, k) { t.classList.toggle("on", k === i); });
+      if (cur) { cur.textContent = i + 1; }
+    }
+    function start() { stop(); if (playing && !reduceMotion) { timer = setInterval(function () { go(i + 1); }, 5500); } }
+    function stop() { if (timer) { clearInterval(timer); timer = null; } }
+    var reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    var pv = c.querySelector(".prev"), nx = c.querySelector(".next");
+    if (pv) { pv.addEventListener("click", function () { go(i - 1); start(); }); }
+    if (nx) { nx.addEventListener("click", function () { go(i + 1); start(); }); }
+    Array.prototype.forEach.call(thumbs, function (t, k) { t.addEventListener("click", function () { go(k); start(); }); });
+    if (btn) { btn.addEventListener("click", function () { playing = !playing; btn.textContent = playing ? "Pause" : "Play"; playing ? start() : stop(); }); }
+    c.addEventListener("mouseenter", stop); c.addEventListener("mouseleave", start);
+    c.addEventListener("keydown", function (e) { if (e.key === "ArrowLeft") { go(i - 1); } if (e.key === "ArrowRight") { go(i + 1); } });
+    var x0 = null;
+    c.addEventListener("touchstart", function (e) { x0 = e.touches[0].clientX; }, { passive: true });
+    c.addEventListener("touchend", function (e) { if (x0 === null) { return; } var d = e.changedTouches[0].clientX - x0; if (Math.abs(d) > 40) { go(d < 0 ? i + 1 : i - 1); start(); } x0 = null; });
+    if (btn) { btn.textContent = "Pause"; }
+    go(0); start();
+  });
+
+  /* ---------- course filter ---------- */
+  var tabs = document.querySelectorAll(".tab[data-filter]");
+  Array.prototype.forEach.call(tabs, function (t) {
+    t.addEventListener("click", function () {
+      var f = t.getAttribute("data-filter");
+      Array.prototype.forEach.call(tabs, function (o) { o.setAttribute("aria-selected", o === t ? "true" : "false"); });
+      Array.prototype.forEach.call(document.querySelectorAll(".ccard"), function (c) {
+        var show = f === "all" || c.getAttribute("data-cat") === f;
+        c.classList.toggle("hide", !show);
+        if (show) { c.classList.remove("pop"); void c.offsetWidth; c.classList.add("pop"); }
+      });
+    });
+  });
+
+  /* ---------- ?course= prefill and team hash flash ---------- */
+  try {
+    var cq = new URLSearchParams(location.search).get("course"), ta = document.querySelector("#contact-form textarea, form textarea");
+    if (cq && ta && !ta.value) { ta.value = "I would like to know about the course: " + cq + "."; }
+  } catch (err) {}
+  if (location.hash.indexOf("#p-") === 0) {
+    var m = document.getElementById(location.hash.slice(1));
+    if (m) { setTimeout(function () { m.scrollIntoView({ block: "center" }); m.classList.add("flash"); }, 400); }
+  }
+
+  /* ---------- open a pop-up straight from a link such as insights#etp ---------- */
+  function openLinked() {
+    if (location.hash.length < 2) { return; }
+    var linked = document.getElementById(decodeURIComponent(location.hash.slice(1)));
+    if (linked && linked.tagName === "DIALOG" && linked.showModal && !linked.open) {
+      linked.showModal();
+      document.body.classList.add("modal-open");
+    }
+  }
+  openLinked();
+  window.addEventListener("hashchange", openLinked);
 })();

@@ -44,3 +44,10 @@ BLUEGREEN WEBSITE - KIVABE CHALABEN
 9) Saf URL (.html chhara)
    Online-e ঠিকানা hobe bgrcbd.com/about, /services, /team ... (GitHub Pages nijei .html chhara kholay).
    Nijer computer-e double-click kore khulle bhetorer link kaj korbe na. Shudhu GitHub-e (online) dekhben.
+
+UPGRADE v3: Replace ALL files and folders (index/services/training/team/contact etc., style.css, script.js, images/art/, images/team/). Keep your CNAME file.
+
+UPGRADE v4: business email (info@, projects@, training@bgrcbd.com), 8 illustrated client cards,
+Projects and Insights as popup windows, Humayra's Google Scholar link, Mamun designation.
+NOTE: the contact form still delivers to the Gmail address registered with Web3Forms until you create a new
+key for info@bgrcbd.com at web3forms.com and paste it into build.py (web3forms_key) or send it to Claude.
